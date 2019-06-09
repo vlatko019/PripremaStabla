@@ -41,22 +41,39 @@ public:
 	}
 	void traversal(Node* p) {
 		if (p) {
-			std::cout << p->info;
+			std::cout << p->info << "||";
 			traversal(p->llink);
 			traversal(p->rlink);
 		}
 	}
 
-	//get it fixed
-	int getDepth(Node* find, Node* start, int k) {
-		int i = k;
-		if (start == find) {
-			return k;
-		}
-		if (start){
-			getDepth(find, start->llink, i);
-			getDepth(find, start->rlink, i);
-		}
-		return -1;
+	//fixed
+	int getDepth(Node* start, int data, int k) {
+		int result;
+		if (!start) return -1;
+		if (start->info == data) return k;
+		
+		//Formated debug log
+		if (start->llink) std::cout << k << " " << start->info << " Left " << start->llink->info << std::endl;
+		else std::cout << k << " " << start->info << " Left NULL" << std::endl;
+		//Formated debug log
+
+
+		result = getDepth(start->llink, data, ++k);
+		if (result != -1) return result;
+		//Formated debug log
+		if (start->rlink) std::cout << k << " " << start->info << " Right " << start->rlink->info << std::endl;
+		else std::cout << k << " " << start->info << " Right NULL" << std::endl;
+		//Formated debug log
+
+
+		result = getDepth(start->rlink, data, k--);
+		return result;
+		
+	}
+
+	int getLevel(Node* node, int data)
+	{
+		return getDepth(node, data, 0);
 	}
 };
